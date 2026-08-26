@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}تم استلام طلبك | Code & Forge{% endblock %}
+
+{% block content %}
+<section id="contact" style="padding-top:140px;">
+  <div class="contact-wrapper success-box">
+    <div class="check">✓</div>
+    <h3>تم استلام طلبك بنجاح</h3>
+    <p>شكراً لثقتك بـ Code &amp; Forge. سيقوم فريقنا بمراجعة تفاصيل مشروعك والتواصل معك عبر الهاتف أو البريد الإلكتروني في أقرب وقت ممكن.</p>
+    <div style="margin-top:30px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center;">
+      <a href="{% url 'services:home' %}" class="cta-btn">العودة للرئيسية</a>
+      <a href="{{ facebook_url }}" target="_blank" rel="noopener noreferrer" style="color:#00f2fe; text-decoration:none; align-self:center;">تابعنا على فيسبوك ↗</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

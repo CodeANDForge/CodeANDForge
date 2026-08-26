@@ -1,0 +1,38 @@
+[
+  {
+    "model": "services.servicetype",
+    "pk": 1,
+    "fields": {
+      "name": "تطوير مواقع ويب",
+      "slug": "web-development",
+      "short_description": "مواقع سريعة وآمنة، من صفحة هبوط بسيطة إلى منصة متكاملة.",
+      "icon": "code",
+      "is_active": true,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "services.servicetype",
+    "pk": 2,
+    "fields": {
+      "name": "برمجة تطبيقات",
+      "slug": "app-development",
+      "short_description": "تطبيقات جوال وويب مصممة بأداء عالٍ وتجربة استخدام سلسة.",
+      "icon": "app",
+      "is_active": true,
+      "display_order": 2
+    }
+  },
+  {
+    "model": "services.servicetype",
+    "pk": 3,
+    "fields": {
+      "name": "حلول رقمية مخصصة",
+      "slug": "custom-digital-solutions",
+      "short_description": "أنظمة وأتمتة مصممة خصيصاً لتحديات عملك الفريدة.",
+      "icon": "custom",
+      "is_active": true,
+      "display_order": 3
+    }
+  }
+]

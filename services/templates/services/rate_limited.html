@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}طلبات كثيرة | Code & Forge{% endblock %}
+
+{% block content %}
+<section id="contact" style="padding-top:140px;">
+  <div class="contact-wrapper" style="text-align:center;">
+    <h2 style="background:linear-gradient(45deg,#00f2fe,#ff007f); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:26px; margin-bottom:16px;">عدد الطلبات كبير جداً</h2>
+    <p style="color:#a0a0a5; line-height:1.8; margin-bottom:28px;">
+      لقد تجاوزت الحد المسموح به من الطلبات خلال فترة قصيرة. الرجاء المحاولة لاحقاً،
+      أو تواصل معنا مباشرة عبر فيسبوك.
+    </p>
+    <a href="{{ facebook_url }}" target="_blank" rel="noopener noreferrer" class="cta-btn">تواصل عبر فيسبوك</a>
+  </div>
+</section>
+{% endblock %}

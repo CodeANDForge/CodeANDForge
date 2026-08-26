@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero" id="home">
+  <div class="code-icon">&lt;<span>/</span>&gt;</div>
+  <h1>CODE &amp; FORGE</h1>
+  <p>DIGITAL ATELIER</p>
+  <a href="{% url 'services:request_service' %}" class="cta-btn">ابدأ مشروعك الآن</a>
+</section>
+
+<section id="about">
+  <div class="about">
+    <div class="section-title" style="margin-bottom:35px;">
+      <p class="eyebrow">من نحن</p>
+      <h2>نصهر الكود لنشكّل مستقبلك الرقمي</h2>
+      <span class="plain" style="max-width:600px;">
+        Code &amp; Forge أتيليه رقمي متخصص في بناء المواقع والتطبيقات والحلول التقنية المخصصة —
+        حيث تُصاغ كل فكرة بدقة الحرفي وسرعة المهندس.
+      </span>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <h3>+50</h3>
+        <p>مشروعاً مُنجزاً بحرفية</p>
+      </div>
+      <div class="stat-box">
+        <h3>24/7</h3>
+        <p>دعم فني ومتابعة مستمرة</p>
+      </div>
+      <div class="stat-box">
+        <h3>100%</h3>
+        <p>أمان وخصوصية لبيانات عملائنا</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-title">
+    <p class="eyebrow">خدماتنا</p>
+    <h2>حلول تقنية تناسب طموحك</h2>
+  </div>
+  <div class="services-grid">
+    {% for service in services %}
+    <div class="service-card">
+      <div class="service-icon">◆</div>
+      <h3>{{ service.name }}</h3>
+      <p>{{ service.short_description }}</p>
+      <a href="{% url 'services:request_service' %}?service={{ service.slug }}">اطلب هذه الخدمة ←</a>
+    </div>
+    {% empty %}
+    <p style="color:#a0a0a5; text-align:center; grid-column: 1 / -1;">لا توجد خدمات معروضة حالياً.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-title">
+    <p class="eyebrow">أعمالنا</p>
+    <h2>لمحة من مشاريعنا</h2>
+    <span class="plain">نماذج توضيحية لأسلوب عملنا — يمكن استبدالها بمشاريعك الفعلية لاحقاً</span>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-card">
+      <span class="portfolio-tag">Web Platform</span>
+      <h4>منصة تجارة إلكترونية</h4>
+      <p>متجر إلكتروني متكامل بنظام دفع آمن ولوحة تحكم مخصصة لإدارة الطلبات والمخزون.</p>
+    </div>
+    <div class="portfolio-card">
+      <span class="portfolio-tag">Mobile App</span>
+      <h4>تطبيق حجوزات</h4>
+      <p>تطبيق جوال لإدارة الحجوزات والمواعيد مع إشعارات فورية ونظام تقييم للخدمة.</p>
+    </div>
+    <div class="portfolio-card">
+      <span class="portfolio-tag">Custom System</span>
+      <h4>نظام إدارة داخلي</h4>
+      <p>لوحة تحكم مخصصة لأتمتة سير العمل الداخلي وربط الفرق ببيانات لحظية.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact-cta" style="text-align:center;">
+  <div class="section-title">
+    <h2>لديك فكرة؟ لنصنعها معاً</h2>
+    <span class="plain">أخبرنا بتفاصيل مشروعك وسنعود إليك بخطة عمل واضحة خلال وقت قصير.</span>
+  </div>
+  <a href="{% url 'services:request_service' %}" class="cta-btn">أرسل طلب الخدمة</a>
+</section>
+
+{% endblock %}

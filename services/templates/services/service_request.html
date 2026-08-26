@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}اطلب خدمتك | Code & Forge{% endblock %}
+
+{% block content %}
+<section id="contact" style="padding-top:140px;">
+  <div class="section-title">
+    <p class="eyebrow">Request A Service</p>
+    <h2>اطلب خدمتك</h2>
+    <span class="plain">عبّئ النموذج التالي وسيتواصل معك فريق Code &amp; Forge في أقرب وقت</span>
+  </div>
+
+  <div class="contact-wrapper">
+    <form method="post" action="{% url 'services:request_service' %}" novalidate>
+      {% csrf_token %}
+
+      <div class="hp-field" aria-hidden="true">
+        <label for="id_website">اتركه فارغاً</label>
+        {{ form.website }}
+      </div>
+
+      {% if form.non_field_errors %}
+        <div class="form-msg">
+          {% for error in form.non_field_errors %}<p style="margin:0;">{{ error }}</p>{% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label for="{{ form.service_type.id_for_label }}">{{ form.service_type.label }}</label>
+        {{ form.service_type }}
+        {% for error in form.service_type.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.full_name.id_for_label }}">{{ form.full_name.label }}</label>
+        {{ form.full_name }}
+        {% for error in form.full_name.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
+        {{ form.phone_number }}
+        {% for error in form.phone_number.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+        {% for error in form.email.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.project_description.id_for_label }}">{{ form.project_description.label }}</label>
+        {{ form.project_description }}
+        {% for error in form.project_description.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <button type="submit" class="submit-btn">إرسال الطلب</button>
+
+      <p class="contact-note">
+        بياناتك محمية ولن تُستخدم إلا للتواصل معك بخصوص طلبك.
+      </p>
+    </form>
+  </div>
+</section>
+{% endblock %}

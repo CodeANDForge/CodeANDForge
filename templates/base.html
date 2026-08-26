@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Code & Forge | Digital Atelier{% endblock %}</title>
+<meta name="description" content="Code & Forge — أتيليه رقمي لصناعة المواقع والتطبيقات والحلول التقنية المخصصة.">
+<link rel="stylesheet" href="{% static 'css/neon.css' %}">
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<header>
+  <a href="{% url 'services:home' %}" class="logo">CODE <span>&amp;</span> FORGE</a>
+  <nav>
+    <ul>
+      <li><a href="{% url 'services:home' %}#home">الرئيسية</a></li>
+      <li><a href="{% url 'services:home' %}#services">خدماتنا</a></li>
+      <li><a href="{% url 'services:home' %}#portfolio">معرض الأعمال</a></li>
+      <li><a href="{% url 'services:request_service' %}">تواصل معنا</a></li>
+    </ul>
+  </nav>
+</header>
+
+{% if messages %}
+  <div class="site-messages">
+    {% for message in messages %}
+      <div class="site-message">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<footer>
+  <div class="foot-logo">© {% now "Y" %} CODE <span>&amp;</span> FORGE — DIGITAL ATELIER</div>
+  <a class="fb-link" href="{{ facebook_url|default:'https://www.facebook.com/share/18ie8XWUJa/' }}" target="_blank" rel="noopener noreferrer">
+    تابعنا على فيسبوك ↗
+  </a>
+</footer>
+
+<script>
+  // خلفية "المصفوفة الرقمية" النيونية
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const columns = Math.floor(canvas.width / 25);
+  const fallPositions = Array(columns).fill(0);
+
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(5, 5, 8, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < fallPositions.length; i++) {
+      const text = Math.random() > 0.5 ? "1" : "0";
+      const x = i * 25;
+      const y = fallPositions[i] * 25;
+
+      ctx.fillStyle = Math.random() > 0.5 ? '#00f2fe' : '#ff007f';
+      ctx.font = '12px monospace';
+      ctx.fillText(text, x, y);
+
+      if (y > canvas.height && Math.random() > 0.975) {
+        fallPositions[i] = 0;
+      }
+      fallPositions[i]++;
+    }
+  }
+
+  setInterval(drawMatrix, 40);
+</script>
+
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>
