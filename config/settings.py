@@ -174,7 +174,7 @@ CSRF_TRUSTED_ORIGINS = config(
 # RATE LIMITING (django-ratelimit) — applied in services/views.py
 # Blocks spam / automated flooding of the service-request form.
 # ---------------------------------------------------------------------------
-RATELIMIT_ENABLE = True
+RATELIMIT_ENABLE = False
 RATELIMIT_VIEW = "services.views.ratelimited_error"
 
 # ---------------------------------------------------------------------------
