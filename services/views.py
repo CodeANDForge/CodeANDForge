@@ -93,7 +93,7 @@ def request_service(request):
                             f"الخدمة: {service_request.service_type}\n\n"
                             f"الوصف:\n{service_request.project_description}"
                         ),
-                        fail_silently=True,
+                        fail_silently=False,
                     )
                 except Exception:
                     logger.exception("Failed to send admin notification email")
