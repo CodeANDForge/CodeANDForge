@@ -211,3 +211,4 @@ ANYMAIL = {
     "RESEND_API_KEY": config("RESEND_API_KEY", default=""),
 }
 DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
+SERVER_EMAIL = "onboarding@resend.dev"
