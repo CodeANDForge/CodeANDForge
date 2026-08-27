@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "services",
+    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -193,7 +194,7 @@ LOGGING = {
 # ---------------------------------------------------------------------------
 # EMAIL — used to notify the admin instantly of a new service request
 # ---------------------------------------------------------------------------
-EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
 EMAIL_HOST = config("EMAIL_HOST", default="")
 EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
@@ -205,3 +206,8 @@ ADMIN_NOTIFICATION_EMAIL = config("ADMIN_NOTIFICATION_EMAIL", default="")
 ADMINS = [("Admin", ADMIN_NOTIFICATION_EMAIL)] if ADMIN_NOTIFICATION_EMAIL else []
 
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18ie8XWUJa/"
+
+ANYMAIL = {
+    "RESEND_API_KEY": config("RESEND_API_KEY", default=""),
+}
+DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
