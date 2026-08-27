@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_ratelimit",
     "services",
 ]
 
@@ -149,6 +150,11 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_AGE = 60 * 30  # 30 minutes admin session timeout
 
+# Trust Railway's proxy header so Django knows the original request was HTTPS
+# (Railway terminates SSL and forwards plain HTTP internally, which otherwise
+# causes an infinite redirect loop with SECURE_SSL_REDIRECT).
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # Only force HTTPS-only cookies / redirects when NOT in local DEBUG mode.
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -196,12 +202,3 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 ADMIN_NOTIFICATION_EMAIL = config("ADMIN_NOTIFICATION_EMAIL", default="")
 
 FACEBOOK_PAGE_URL = "https://www.facebook.com/share/18ie8XWUJa/"
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": BASE_DIR / "django_cache",
-    }
-}
-
-RATELIMIT_ENABLE = False
