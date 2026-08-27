@@ -186,6 +186,7 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "loggers": {
         "django.security": {"handlers": ["console"], "level": "WARNING"},
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
         "services": {"handlers": ["console"], "level": "INFO"},
     },
 }
