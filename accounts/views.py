@@ -32,3 +32,16 @@ def logout_view(request):
     logout(request)
     messages.success(request, "تم تسجيل الخروج بنجاح.")
     return redirect("services:home")
+
+
+def landing_view(request):
+    if request.user.is_authenticated:
+        return redirect("services:home")
+    login_form = None
+    register_form = RegisterForm()
+    from django.contrib.auth.forms import AuthenticationForm
+    login_form = AuthenticationForm()
+    return render(request, "accounts/landing.html", {
+        "login_form": login_form,
+        "register_form": register_form,
+    })

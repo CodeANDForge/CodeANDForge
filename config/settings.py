@@ -214,3 +214,6 @@ ANYMAIL = {
 }
 DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
 SERVER_EMAIL = "onboarding@resend.dev"
+
+LOGIN_REDIRECT_URL = "services:home"
+LOGIN_URL = "landing"

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Code & Forge | تسجيل الدخول{% endblock %}
+{% block content %}
+<section class="auth-section">
+    <div class="auth-tabs">
+        <button type="button" class="tab-btn active" onclick="showTab('login')">تسجيل الدخول</button>
+        <button type="button" class="tab-btn" onclick="showTab('register')">إنشاء حساب</button>
+    </div>
+
+    <div id="login-tab" class="tab-content active">
+        <form method="post" action="{% url 'accounts:login' %}" class="auth-form">
+            {% csrf_token %}
+            {% for field in login_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="field-error">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-primary">دخول</button>
+        </form>
+    </div>
+
+    <div id="register-tab" class="tab-content">
+        <form method="post" action="{% url 'accounts:register' %}" class="auth-form">
+            {% csrf_token %}
+            {% for field in register_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="field-error">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-primary">إنشاء الحساب</button>
+        </form>
+    </div>
+</section>
+
+<style>
+.auth-tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+.tab-btn { flex: 1; padding: 12px; background: transparent; border: 1px solid #00f2fe55; color: #fff; border-radius: 8px; cursor: pointer; }
+.tab-btn.active { background: linear-gradient(135deg, #ff007f, #00f2fe); border: none; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+</style>
+
+<script>
+function showTab(tab) {
+    document.getElementById('login-tab').classList.toggle('active', tab === 'login');
+    document.getElementById('register-tab').classList.toggle('active', tab === 'register');
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+}
+</script>
+{% endblock %}
