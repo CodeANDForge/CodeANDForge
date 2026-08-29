@@ -11,5 +11,7 @@ admin.site.index_title = "Service Requests Overview"
 
 urlpatterns = [
     path(settings.ADMIN_URL_PATH, admin.site.urls),
+    path("accounts/", include("accounts.urls")),
+    path("chat/", include("chat.urls")),
     path("", include("services.urls")),
 ]

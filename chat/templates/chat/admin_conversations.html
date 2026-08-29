@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}محادثات العملاء | لوحة الدعم{% endblock %}
+{% block content %}
+<section class="chat-section">
+    <h1>محادثات الدعم الفني</h1>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>المستخدم</th>
+                <th>البريد الإلكتروني</th>
+                <th>الحالة</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for conv in conversations %}
+            <tr>
+                <td>{{ conv.user.username }}</td>
+                <td>{{ conv.user.email }}</td>
+                <td>
+                    {% if conv.escalated_to_human %}
+                        <span style="color:#ff007f;">بحاجة لدعم فني</span>
+                    {% elif conv.is_open %}
+                        <span style="color:#00f2fe;">مفتوحة (بوت)</span>
+                    {% else %}
+                        <span style="opacity:0.5;">مغلقة</span>
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'chat:admin_conversation_detail' conv.user.id %}" class="btn-primary" style="display:inline-block;padding:6px 14px;">فتح</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">لا توجد محادثات بعد.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+<style>
+.admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.admin-table th, .admin-table td { padding: 10px; border-bottom: 1px solid #00f2fe33; text-align: right; }
+</style>
+{% endblock %}

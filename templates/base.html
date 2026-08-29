@@ -20,6 +20,16 @@
       <li><a href="{% url 'services:home' %}#services">خدماتنا</a></li>
       <li><a href="{% url 'services:home' %}#portfolio">معرض الأعمال</a></li>
       <li><a href="{% url 'services:request_service' %}">تواصل معنا</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'accounts:logout' %}">تسجيل الخروج ({{ user.username }})</a></li>
+            <li><a href="{% url 'chat:chat' %}">الدردشة</a></li>
+            {% if user.is_staff %}
+                <li><a href="{% url 'chat:admin_conversations_list' %}">لوحة الدعم</a></li>
+            {% endif %}
+        {% else %}
+            <li><a href="{% url 'accounts:login' %}">تسجيل الدخول</a></li>
+            <li><a href="{% url 'accounts:register' %}">إنشاء حساب</a></li>
+        {% endif %}
     </ul>
   </nav>
 </header>

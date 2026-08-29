@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}محادثة {{ target_user.username }} | لوحة الدعم{% endblock %}
+{% block content %}
+<section class="chat-section">
+    <h1>محادثة مع {{ target_user.username }}</h1>
+    <p><a href="{% url 'chat:admin_conversations_list' %}">&rarr; رجوع لكل المحادثات</a></p>
+
+    <div id="chat-box" class="chat-box">
+        {% for msg in messages %}
+            <div class="chat-msg chat-msg-{{ msg.sender }}">
+                <span class="chat-sender">
+                    {% if msg.sender == "user" %}{{ target_user.username }}{% elif msg.sender == "bot" %}المساعد الآلي{% else %}أنت (الدعم){% endif %}
+                </span>
+                <p>{{ msg.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form id="chat-form" class="chat-form">
+        {% csrf_token %}
+        <input type="text" id="chat-input" placeholder="اكتب ردك هنا..." autocomplete="off" required>
+        <button type="submit" class="btn-primary">إرسال</button>
+    </form>
+
+    <form method="post" action="{% url 'chat:admin_close_conversation' target_user.id %}" style="margin-top:20px;" onsubmit="return confirm('هل أنت متأكد من إنهاء ومسح هذه المحادثة؟');">
+        {% csrf_token %}
+        <button type="submit" style="background:transparent;border:1px solid #ff007f;color:#ff007f;padding:8px 16px;border-radius:8px;">إنهاء ومسح المحادثة</button>
+    </form>
+</section>
+
+<style>
+.chat-section { max-width: 700px; margin: 0 auto; padding: 20px; }
+.chat-box { height: 400px; overflow-y: auto; border: 1px solid #00f2fe55; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: rgba(5,5,8,0.6); }
+.chat-msg { margin-bottom: 12px; padding: 8px 12px; border-radius: 8px; max-width: 80%; }
+.chat-msg-user { background: rgba(0,242,254,0.1); }
+.chat-msg-bot { background: rgba(150,150,150,0.1); }
+.chat-msg-admin { background: rgba(255,0,127,0.15); margin-left: auto; text-align: right; }
+.chat-sender { font-size: 0.75em; opacity: 0.7; display: block; margin-bottom: 3px; }
+.chat-form { display: flex; gap: 10px; }
+.chat-form input { flex: 1; padding: 10px; border-radius: 8px; background: transparent; border: 1px solid #00f2fe55; color: #fff; }
+</style>
+
+<script>
+const chatBox = document.getElementById('chat-box');
+const chatForm = document.getElementById('chat-form');
+const chatInput = document.getElementById('chat-input');
+const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+function appendMessage(sender, text) {
+    const div = document.createElement('div');
+    div.className = 'chat-msg chat-msg-' + sender;
+    const label = sender === 'admin' ? 'أنت (الدعم)' : (sender === 'bot' ? 'المساعد الآلي' : '{{ target_user.username }}');
+    div.innerHTML = '<span class="chat-sender">' + label + '</span><p></p>';
+    div.querySelector('p').textContent = text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+chatForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const text = chatInput.value.trim();
+    if (!text) return;
+    appendMessage('admin', text);
+    chatInput.value = '';
+
+    const formData = new FormData();
+    formData.append('text', text);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+    await fetch("{% url 'chat:admin_send_message' target_user.id %}", { method: 'POST', body: formData });
+});
+
+let lastCount = {{ messages|length }};
+setInterval(async function() {
+    const res = await fetch("{% url 'chat:poll_messages' %}?user_id={{ target_user.id }}");
+}, 5000);
+</script>
+{% endblock %}

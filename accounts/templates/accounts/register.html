@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}إنشاء حساب | Code & Forge{% endblock %}
+{% block content %}
+<section class="auth-section">
+    <h1>إنشاء حساب جديد</h1>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="field-error">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary">إنشاء الحساب</button>
+    </form>
+    <p class="auth-switch">لديك حساب بالفعل؟ <a href="{% url 'accounts:login' %}">سجل الدخول</a></p>
+</section>
+{% endblock %}
